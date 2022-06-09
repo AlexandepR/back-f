@@ -22,6 +22,9 @@ app.get('/products/:productTitle',(req: Request, res: Response) => {
         res.send(404)
     }
 })
+app.get('/addresses/', (req: Request, res: Response) => {
+    res.send(addresses)
+})
 app.get('/addresses/:id', (req: Request, res: Response) => {
     let address = addresses.find( el => el.id === +req.params.id)
     if (address) {
