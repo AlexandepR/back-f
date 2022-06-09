@@ -7,6 +7,20 @@ app.use(cors())
 app.use(bodyParser.json())
 const port = process.env.PORT || 3001
 
+
+const products = [{title: 'tomato'}, {title: 'orange'}]
+const addresses = [{value: 'Lenina'}, {value: 'pushkina'}]
+
+app.get('/products',(req: Request, res: Response) => {
+    res.send(products)
+})
+app.get('/products/tomato',(req:Request, res:Response) => {
+    res.send(addresses[1])
+})
+app.get('/addresses', (req: Request, res: Response) => {
+    res.send(addresses)
+})
+
 const videos = [
     {id: 1, title: 'About JS - 01', author: 'it-incubator.eu'},
     {id: 2, title: 'About JS - 02', author: 'it-incubator.eu'},
