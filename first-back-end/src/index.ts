@@ -9,21 +9,26 @@ const port = process.env.PORT || 3001
 
 
 const products = [{title: 'tomato'}, {title: 'orange'}]
-const addresses = [{value: 'Lenina'}, {value: 'pushkina'}]
+const addresses = [{id: 1, value: 'LukaGandona'}, {id: 2, value: 'Pushkina'}]
 
 app.get('/products',(req: Request, res: Response) => {
     res.send(products)
 })
 app.get('/products/:productTitle',(req: Request, res: Response) => {
     let product = products.find(p => p.title === req.params.productTitle);
-    res.send(product)
-    if (!product) {
+    if (product) {
         res.send(product)
     } else {
         res.send(404)
     }
 })
-app.get('/addresses', (req: Request, res: Response) => {
+app.get('/addresses/:id', (req: Request, res: Response) => {
+    let address = addresses.find( el => el.id === +req.params.id)
+    if (address) {
+        res.send(address)
+    } else {
+        res.send(404)
+    }
     res.send(addresses)
 })
 
