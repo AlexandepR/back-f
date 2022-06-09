@@ -65,7 +65,3 @@ app.put('/videos/:videoId', (req:Request, res:Response) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-
-
-//              yarn nodemon index.js
-//              yarn nodemon --inspect dist/index.js
