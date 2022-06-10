@@ -8,14 +8,23 @@ app.use(bodyParser.json())
 const port = process.env.PORT || 3001
 
 
-const products = [{title: 'tomato'}, {title: 'orange'}]
+const products = [{id: 1, title: 'tomato'}, {id: 2, title: 'orange'}]
 const addresses = [{id: 1, value: 'LukaGandona'}, {id: 2, value: 'Pushkina'}]
 
-app.get('/products',(req: Request, res: Response) => {
-    res.send(products)
+app.get('/products', (req: Request, res: Response) => {
+    if (req.query.title) {
+        let searchString = req.query.title.toString();
+        res.send(products.filter(pr => pr.title.indexOf(searchString) > -1))
+    } else {
+        res.send(products)
+    }
 })
-app.get('/products/:productTitle',(req: Request, res: Response) => {
-    let product = products.find(p => p.title === req.params.productTitle);
+// app.delete('/products:id',(req:Request, res:Response) =>{
+//     let product = products.slice(req.params.id,1)
+//
+// })
+app.get('/products/:id', (req: Request, res: Response) => {
+    let product = products.find(p => p.id === +req.params.id);
     if (product) {
         res.send(product)
     } else {
@@ -26,7 +35,7 @@ app.get('/addresses/', (req: Request, res: Response) => {
     res.send(addresses)
 })
 app.get('/addresses/:id', (req: Request, res: Response) => {
-    let address = addresses.find( el => el.id === +req.params.id)
+    let address = addresses.find(el => el.id === +req.params.id)
     if (address) {
         res.send(address)
     } else {
@@ -60,7 +69,7 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
         res.json(video)
     }
 })
-app.post('/videos', (req:Request, res:Response) => {
+app.post('/videos', (req: Request, res: Response) => {
     const newVideo = {
         id: (+new Date()),
         title: req.body.title,
@@ -69,7 +78,7 @@ app.post('/videos', (req:Request, res:Response) => {
     videos.push(newVideo)
     res.send(newVideo)
 })
-app.delete('/videos/:videoId', (req:Request, res:Response) => {
+app.delete('/videos/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
     const index = videos.findIndex(v => v.id === id)
     if (index === -1) {
@@ -79,7 +88,7 @@ app.delete('/videos/:videoId', (req:Request, res:Response) => {
         res.sendStatus(204)
     }
 })
-app.put('/videos/:videoId', (req:Request, res:Response) => {
+app.put('/videos/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
     const video = videos.find(v => v.id === id)
     if (!video) {
