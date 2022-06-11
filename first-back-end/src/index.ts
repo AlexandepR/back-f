@@ -19,10 +19,15 @@ app.get('/products', (req: Request, res: Response) => {
         res.send(products)
     }
 })
-// app.delete('/products:id',(req:Request, res:Response) =>{
-//     let product = products.slice(req.params.id,1)
-//
-// })
+app.delete('/products:id', (req: Request, res: Response) => {
+  for (let i = 0; i < products.length; i++) {
+      if (products[i].id === +req.params.id) {
+          products.splice(i, 1)
+          res.send(201);
+          return;
+      }
+  }
+})
 app.get('/products/:id', (req: Request, res: Response) => {
     let product = products.find(p => p.id === +req.params.id);
     if (product) {
