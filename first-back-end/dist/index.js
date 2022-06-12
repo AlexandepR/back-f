@@ -11,7 +11,7 @@ app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
 const port = process.env.PORT || 3001;
 const products = [{ id: 1, title: 'tomato' }, { id: 2, title: 'orange' }];
-const addresses = [{ id: 1, value: 'LukaGandona' }, { id: 2, value: 'Pushkina' }];
+const addresses = [{ id: 1, value: 'Lenina' }, { id: 2, value: 'Pushkina' }];
 app.get('/products', (req, res) => {
     if (req.query.title) {
         let searchString = req.query.title.toString();
@@ -23,7 +23,12 @@ app.get('/products', (req, res) => {
 });
 app.post('/products', (req, res) => {
     const idRandom = Math.floor(Math.random() * (1000 - 1) + 1);
-    const newProduct = { id: idRandom };
+    const newProduct = {
+        id: idRandom,
+        title: req.body.title
+    };
+    products.push(newProduct);
+    res.status(201).send(newProduct);
 });
 app.delete('/products:id', (req, res) => {
     for (let i = 0; i < products.length; i++) {

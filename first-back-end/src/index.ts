@@ -9,7 +9,7 @@ const port = process.env.PORT || 3001
 
 
 const products = [{id: 1, title: 'tomato'}, {id: 2, title: 'orange'}]
-const addresses = [{id: 1, value: 'LukaGandona'}, {id: 2, value: 'Pushkina'}]
+const addresses = [{id: 1, value: 'Lenina'}, {id: 2, value: 'Pushkina'}]
 
 app.get('/products', (req: Request, res: Response) => {
     if (req.query.title) {
@@ -21,7 +21,12 @@ app.get('/products', (req: Request, res: Response) => {
 })
 app.post('/products', (req: Request, res: Response) => {
     const idRandom = Math.floor(Math.random() * (1000 - 1) + 1)
-    const newProduct = {id: idRandom}
+    const newProduct = {
+        id: idRandom,
+        title: req.body.title
+    }
+    products.push(newProduct)
+    res.status(201).send(newProduct)
 })
 app.delete('/products:id', (req: Request, res: Response) => {
     for (let i = 0; i < products.length; i++) {
