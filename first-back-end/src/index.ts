@@ -28,7 +28,7 @@ app.post('/products', (req: Request, res: Response) => {
     products.push(newProduct)
     res.status(201).send(newProduct)
 })
-app.delete('/products:id', (req: Request, res: Response) => {
+app.delete('/products/:id', (req: Request, res: Response) => {
     for (let i = 0; i < products.length; i++) {
         if (products[i].id === +req.params.id) {
             products.splice(i, 1)
