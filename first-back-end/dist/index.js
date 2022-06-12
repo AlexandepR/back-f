@@ -30,7 +30,7 @@ app.post('/products', (req, res) => {
     products.push(newProduct);
     res.status(201).send(newProduct);
 });
-app.delete('/products:id', (req, res) => {
+app.delete('/products/:id', (req, res) => {
     for (let i = 0; i < products.length; i++) {
         if (products[i].id === +req.params.id) {
             products.splice(i, 1);
