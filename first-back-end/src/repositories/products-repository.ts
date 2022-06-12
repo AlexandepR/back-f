@@ -10,7 +10,7 @@ export const productsRepository = {
     },
     getProductByID (id: number) {
         let product = products.find(p => p.id === id);
-        return product
+        return product;
     },
     creareProduct(title: string) {
         const idRandom = Math.floor(Math.random() * (1000 - 1) + 1)
@@ -27,7 +27,16 @@ export const productsRepository = {
             product.title = title
             return true
         } else {
-            return fals
+            return false
         }
+    },
+    deleteProduct(id:number) {
+        for (let i = 0; i < products.length; i++) {
+            if (products[i].id === id) {
+                products.splice(i, 1)
+                return true;
+            }
+        }
+        return false
     }
 }
