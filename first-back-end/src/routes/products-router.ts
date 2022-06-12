@@ -6,24 +6,28 @@ export const productsRouter = Router({})
 
 productsRouter.get('/', (req: Request, res: Response) => {
     const foundProducts = productsRepository.findProducts(req.query.title?.toString())
-        res.send(foundProducts)
+    res.send(foundProducts)
 })
 productsRouter.post('/', (req: Request, res: Response) => {
     const newProduct = productsRepository.creareProduct(req.body.title)
     res.status(201).send(newProduct)
 })
 productsRouter.put('/:id', (req: Request, res: Response) => {
-    
+    const isUpdated = productsRepository.updateProduct(+req.params.id, req.body.title)
+    if (isUpdated) {
+        const product = productsRepository.getProductByID(+req.params.id)
+        res.send(product)
+    } else {
+        res.send(404)
+    }
 })
 productsRouter.delete('/:id', (req: Request, res: Response) => {
-    for (let i = 0; i < products.length; i++) {
-        if (products[i].id === +req.params.id) {
-            products.splice(i, 1)
-            res.send(204);
-            return;
-        }
+    const isDeleted = productsRepository.deleteProduct(+req.params.id)
+    if (isDeleted) {
+        res.send(204)
+    } else {
+        res.send(404)
     }
-    res.send(404)
 })
 productsRouter.get('/:id', (req: Request, res: Response) => {
     let product = productsRepository.getProductByID(+req.params.id)
