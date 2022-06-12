@@ -7,7 +7,6 @@ app.use(cors())
 app.use(bodyParser.json())
 const port = process.env.PORT || 3001
 
-
 const products = [{id: 1, title: 'tomato'}, {id: 2, title: 'orange'}]
 const addresses = [{id: 1, value: 'Lenina'}, {id: 2, value: 'Pushkina'}]
 
@@ -28,7 +27,7 @@ app.post('/products', (req: Request, res: Response) => {
     products.push(newProduct)
     res.status(201).send(newProduct)
 })
-app.put('/products/:id', (req:Request, res: Response) => {
+app.put('/products/:id', (req: Request, res: Response) => {
     let product = products.find(p => p.id === +req.params.id)
     if (product) {
         product.title = req.body.title
@@ -36,7 +35,7 @@ app.put('/products/:id', (req:Request, res: Response) => {
     } else {
         res.send(404)
     }
-})
+} )
 app.delete('/products/:id', (req: Request, res: Response) => {
     for (let i = 0; i < products.length; i++) {
         if (products[i].id === +req.params.id) {
