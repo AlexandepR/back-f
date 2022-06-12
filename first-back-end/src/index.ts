@@ -19,14 +19,19 @@ app.get('/products', (req: Request, res: Response) => {
         res.send(products)
     }
 })
+app.post('/products', (req: Request, res: Response) => {
+    const idRandom = Math.floor(Math.random() * (1000 - 1) + 1)
+    const newProduct = {id: idRandom}
+})
 app.delete('/products:id', (req: Request, res: Response) => {
-  for (let i = 0; i < products.length; i++) {
-      if (products[i].id === +req.params.id) {
-          products.splice(i, 1)
-          res.send(201);
-          return;
-      }
-  }
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].id === +req.params.id) {
+            products.splice(i, 1)
+            res.send(204);
+            return;
+        }
+    }
+    res.send(404)
 })
 app.get('/products/:id', (req: Request, res: Response) => {
     let product = products.find(p => p.id === +req.params.id);

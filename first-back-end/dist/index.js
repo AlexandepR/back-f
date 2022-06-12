@@ -10,6 +10,53 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
 const port = process.env.PORT || 3001;
+const products = [{ id: 1, title: 'tomato' }, { id: 2, title: 'orange' }];
+const addresses = [{ id: 1, value: 'LukaGandona' }, { id: 2, value: 'Pushkina' }];
+app.get('/products', (req, res) => {
+    if (req.query.title) {
+        let searchString = req.query.title.toString();
+        res.send(products.filter(pr => pr.title.indexOf(searchString) > -1));
+    }
+    else {
+        res.send(products);
+    }
+});
+app.post('/products', (req, res) => {
+    const idRandom = Math.floor(Math.random() * (1000 - 1) + 1);
+    const newProduct = { id: idRandom };
+});
+app.delete('/products:id', (req, res) => {
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].id === +req.params.id) {
+            products.splice(i, 1);
+            res.send(204);
+            return;
+        }
+    }
+    res.send(404);
+});
+app.get('/products/:id', (req, res) => {
+    let product = products.find(p => p.id === +req.params.id);
+    if (product) {
+        res.send(product);
+    }
+    else {
+        res.send(404);
+    }
+});
+app.get('/addresses/', (req, res) => {
+    res.send(addresses);
+});
+app.get('/addresses/:id', (req, res) => {
+    let address = addresses.find(el => el.id === +req.params.id);
+    if (address) {
+        res.send(address);
+    }
+    else {
+        res.send(404);
+    }
+    res.send(addresses);
+});
 const videos = [
     { id: 1, title: 'About JS - 01', author: 'it-incubator.eu' },
     { id: 2, title: 'About JS - 02', author: 'it-incubator.eu' },
@@ -18,7 +65,7 @@ const videos = [
     { id: 5, title: 'About JS - 05', author: 'it-incubator.eu' },
 ];
 app.get('/', (req, res) => {
-    let helloMessage = 'Hello World!!';
+    let helloMessage = 'Hello World????"?';
     res.send(helloMessage);
 });
 app.get('/videos', (req, res) => {
